@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FiLock, FiMail } from 'react-icons/fi';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import * as Yup from 'yup';
@@ -10,10 +11,13 @@ import Input from '~/components/Form/Input';
 import { InputGroup } from '~/components/Form/styles';
 import Img from '~/components/Images/ImgDefault';
 import Images from '~/config/Images';
+import { signInRequest } from '~/store/modules/auth/actions';
 
 export default function SignIn() {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   async function handleSubmit(data) {
     setLoading(true);
@@ -35,6 +39,8 @@ export default function SignIn() {
       // Validation passed
 
       console.log(data);
+      const { email, password } = data;
+      dispatch(signInRequest(email, password));
       setLoading(false);
     } catch (err) {
       const validationErrors = {};
