@@ -12,11 +12,11 @@ const SignUp = lazy(() => import('~/pages/SignUp'));
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/" exact>
-        <SignIn />
-      </Route>
       <Route path="/register">
         <SignUp />
+      </Route>
+      <Route path="/" exact>
+        <SignIn />
       </Route>
 
       <Route path="/dashboard" isPrivate>

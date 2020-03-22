@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import api from '~/services/api';
@@ -6,7 +8,7 @@ import { signInSuccess } from './actions';
 
 export function* signIn({ payload }) {
   const { email, password } = payload;
-
+  toast.success('ok');
   try {
     const response = yield call(api.post, 'sessions', {
       email,
@@ -14,13 +16,13 @@ export function* signIn({ payload }) {
     });
 
     const { token, user } = response?.data;
-    console.log(token);
+    toast.warn(token);
 
     // validações
 
     yield put(signInSuccess(token, user));
   } catch (err) {
-    console.log(err);
+    toast.error(JSON.stringify(err.response));
   }
 }
 
